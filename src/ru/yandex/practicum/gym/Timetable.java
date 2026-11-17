@@ -4,7 +4,7 @@ import java.util.*;
 
 public class Timetable {
 
-    private Map<DayOfWeek,TreeMap<TimeOfDay, List<TrainingSession>>> timetable;
+    private Map<DayOfWeek, TreeMap<TimeOfDay, List<TrainingSession>>> timetable;
 
     public void addNewTrainingSession(TrainingSession trainingSession) {
         DayOfWeek day = trainingSession.getDayOfWeek();
@@ -14,7 +14,7 @@ public class Timetable {
             timetable.put(day, new TreeMap<>());
         }
         TreeMap<TimeOfDay, List<TrainingSession>> daySchedule = timetable.get(day);
-        if (!daySchedule.containsKey(time)) {
+        if (!daySchedule.containsKey(time)){
             daySchedule.put(time, new ArrayList<>());
         }
         daySchedule.get(time).add(trainingSession);
@@ -24,7 +24,7 @@ public class Timetable {
     public List<TrainingSession> getTrainingSessionsForDay(DayOfWeek dayOfWeek) {
         List<TrainingSession> result = new ArrayList<>();
         TreeMap<TimeOfDay, List<TrainingSession>> daySchedule = timetable.get(dayOfWeek);
-        if(daySchedule == null){
+        if (daySchedule == null){
             return Collections.emptyList();
         }
         for (List<TrainingSession> sessionsAtTime : daySchedule.values()){
@@ -36,7 +36,7 @@ public class Timetable {
 
     public List<TrainingSession> getTrainingSessionsForDayAndTime(DayOfWeek dayOfWeek, TimeOfDay timeOfDay) {
         TreeMap<TimeOfDay, List<TrainingSession>> daySchedule = timetable.get(dayOfWeek);
-        if(daySchedule == null){
+        if (daySchedule == null){
             return Collections.emptyList();
         }
         return daySchedule.getOrDefault(timeOfDay, Collections.emptyList());
@@ -46,14 +46,13 @@ public class Timetable {
 
         Map<Coach, Integer> counter = new HashMap<>();
 
-        for (TreeMap<TimeOfDay, List<TrainingSession>> daySchedule : timetable.values()) {
+        for (TreeMap<TimeOfDay, List<TrainingSession>> daySchedule : timetable.values()){
 
-            for (List<TrainingSession> sessionsAtTime : daySchedule.values()) {
+            for (List<TrainingSession> sessionsAtTime : daySchedule.values()){
 
-                for (TrainingSession session : sessionsAtTime) {
+                for (TrainingSession session : sessionsAtTime){
                     counter.merge(session.getCoach(), 1, Integer::sum);
                 }
-
             }
         }
         List<Map.Entry<Coach, Integer>> result = new ArrayList<>(counter.entrySet());
